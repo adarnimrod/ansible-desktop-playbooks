@@ -1,0 +1,56 @@
+---
+
+- hosts: all
+  tasks:
+  - name: apt install
+    with_items:
+    - plymouth
+    - network-manager
+    - initramfs-tools
+    apt:
+      name: '{{ item }}'
+      state: present
+      update_cache: yes
+      cache_valid_time: 3600
+
+  - name: Set NetworkManager to ignore some interfaces
+    ini_file:
+      dest: /etc/NetworkManager/NetworkManager.conf
+      section: keyfile
+      option: unmanaged-devices
+      value: interface-name:docker0;interface-name:vboxnet0;interface-name:nspawnbr0
+      state: present
+
+  - name: Configure Plymouth
+    ini_file:
+      dest: /etc/plymouth/plymouthd.conf
+      section: Daemon
+      option: Theme
+      value: spinner
+    register: configure_plymouth
+
+  - name: Update initramfs
+    when: configure_plymouth.changed
+    command: /usr/sbin/update-initramfs -u
+
+  - name: Configure GRUB
+    with_dict:
+      GRUB_TIMEOUT: 1
+      GRUB_CMDLINE_LINUX_DEFAULT: 'quiet cgroup_enable=memory splash allow-discards root_trim=yes swapaccount=1'
+    lineinfile:
+      dest: /etc/default/grub
+      line: '{{ item.key }}="{{ item.value }}"'
+      regexp: '^{{ item.key }}='
+      state: present
+    register: configure_grub
+
+  - name: Update GRUB
+    when: configure_grub.changed
+    command: /usr/sbin/update-grub
+
+  - name: Make /tmp tmpfs mount
+    mount:
+      fstype: tmpfs
+      name: /tmp
+      src: none
+      state: present
