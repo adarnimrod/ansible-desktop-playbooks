@@ -1,0 +1,23 @@
+---
+- hosts: all
+  become: no
+  tasks:
+      - name: Download Dropbox tarball
+        get_url:
+            url: https://www.dropbox.com/download?plat=lnx.x86_64
+            dest: '{{ ansible_user_dir }}/Downloads/dropbox-lnx.x86_64.tar.gz'
+            mode: 0o0644
+        register: download_dropbox_tarball
+
+      - name: Unpack Dropbox tarball
+        when: '{{ download_dropbox_tarball.changed }}'
+        unarchive:
+            copy: no
+            dest: '{{ ansible_user_dir }}/'
+            src: '{{ ansible_user_dir }}/Downloads/dropbox-lnx.x86_64.tar.gz'
+
+      - name: Get Python Dropbox startup script
+        get_url:
+            url: https://www.dropbox.com/download?dl=packages/dropbox.py
+            dest: '{{ ansible_user_dir }}/.dropbox-dist/dropbox.py'
+            mode: 0o0755

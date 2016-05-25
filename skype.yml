@@ -1,0 +1,23 @@
+---
+- hosts: all
+  become: yes
+  become_user: root
+  tasks:
+      - name: APT install dependencies
+        with_items:
+        apt:
+            name: '{{ item }}'
+            state: present
+            update_cache: yes
+            cache_valid_time: 3600
+
+      - name: Get Skype Debian package
+        get_url:
+            src: http://www.skype.com/go/getskype-linux-deb
+            dest: /root/skype.deb
+        register: get_skype_package
+
+      - name: Install Skype Debian package
+        apt:
+            deb: /root/skype.deb
+            state: present

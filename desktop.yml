@@ -1,6 +1,7 @@
 ---
-
 - hosts: all
+  become: yes
+  become_user: root
   tasks:
   - name: apt install
     with_items:
@@ -18,7 +19,7 @@
       dest: /etc/NetworkManager/NetworkManager.conf
       section: keyfile
       option: unmanaged-devices
-      value: interface-name:docker0;interface-name:vboxnet0;interface-name:nspawnbr0
+      value: interface-name:docker0;interface-name:vboxnet0;interface-name:nspawnbr0:interface-name:lxcbr0
       state: present
 
   - name: Configure Plymouth

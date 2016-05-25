@@ -1,0 +1,7 @@
+#!/bin/sh -e
+tempfile="$(mktemp)"
+wget http://www.skype.com/go/getskype-linux-deb \
+    --quiet \
+    --output-document "$tempfile"
+dpkg --install --skip-same-version -G "$tempfile" 2>&1 | logger
+rm "$tempfile"
