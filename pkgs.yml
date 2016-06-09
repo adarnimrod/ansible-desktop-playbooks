@@ -4,105 +4,113 @@
   vars:
       apt:
           - ansible
-          - acpi
           - apache2-utils
-          - at
+          - apt-listchanges
+          - apt-xapian-index
           - awscli
-          - bluedevil
-          - bluetooth
+          - bijiben
           - bluez-firmware
-          - btrfs-progs
-          - busybox
+          - brasero
           - capistrano
           - cargo
           - clojure1.6
+          - cmake
           - cryptsetup
+          - deborphan
+          - dejadup
+          - dh-make
           - dnsmasq
-          - docker.io
+          - dnsutils
+          - docker-compose
           - dos2unix
+          - dvd+rw-tools
           - easy-rsa
+          - epiphany-browser
           - fabric
+          - file-roller
           - firmware-intel-sound
           - firmware-iwlwifi
           - firmware-linux
           - flake8
-          - fonts-oxygen
-          - gdisk
+          - ftp
+          - geary
+          - ghex
           - git-annex
           - git-buildpackage
+          - gnome-boxes
+          - gnome-calendar
+          - gnome-clocks
+          - gnome-core
+          - gnome-documents
+          - gnome-logs
+          - gnome-maps
+          - gnome-music
+          - gnome-photos
+          - gnome-shell-extension-gpaste
+          - gnome-software
+          - gnome-todo
+          - gnome-weather
           - golang
           - grub-efi-amd64
-          - gstreamer1.0-libav
           - gstreamer1.0-vaapi
-          - gstreamer1.0-x
+          - hunspell
           - hyphen-en-us
-          - intel-microcode
-          - iputils-arping
           - iputils-ping
-          - kde-config-sddm
-          - kde-config-touchpad
-          - kdeconnect
-          - kdegraphics-mobipocket
-          - kdegraphics-strigi-analyzer
-          - kdegraphics-thumbnailers
-          - kdesudo
-          - kde-telepathy
-          - keepassx
-          - kio-extras
-          - kompare
-          - kontact
+          - keepass2
           - kpcli
-          - kscreen
-          - kwalletcli
-          - kwin-x11
-          - linux-headers-amd64
+          - libnss-resolve
+          - libpam-mount
+          - libreoffice-pdfimport
           - linux-image-amd64
+          - liferea
           - luarocks
-          - lxqt
-          - muon-discover
-          - muon-notifier
-          - muon-updater
+          - meld
           - mythes-en-us
+          - netcat-openbsd
+          - network-manager-gnome
+          - network-manager-pptp-gnome
           - nodejs-legacy
-          - notification-daemon
           - npm
-          - ntfs-3g
-          - obconf-qt
+          - pandoc
           - pelican
-          - plasma-nm
-          - plasma-workspace-wayland
-          - powerdevil
+          - plymouth-themes
+          - polari
+          - printer-driver-all
           - pry
-          - pulseaudio-module-x11
-          - python3-dev
           - python3-pip
-          - python3-wheel
+          - python3-venv
           - python-dev
+          - python-parse
           - python-pip
+          - python-sh
           - python-virtualenv
           - reprepro
-          - sbuild
-          - systemsettings
+          - resolveconf
+          - simple-scan
+          - strongswan-nm
           - task-english
           - task-hebrew
           - task-hebrew-desktop
-          - task-hebrew-kde-desktop
-          - task-kde-desktop
+          - task-hebrew-gnome-desktop
+          - task-gnome-desktop
           - task-laptop
           - task-print-server
           - task-ssh-server
+          - telnet
           - texlive-latex-base
           - texlive-fonts-recommended
+          - texlive-luatex
           - time
           - tmux
           - tox
           - twine
-          - va-driver-all
+          - ufw
+          - uidmap
+          - vcdimager
           - vagrant
-          - vdpau-driver-all
           - vim-nox
+          - vinagre
           - virtualbox-qt
-          - vlc-plugin-notify
           - xdg-user-dirs 
       go:
           - github.com/giantswarm/semver-bump
@@ -112,13 +120,11 @@
           - yo
           - grunt-cli
           - gulp
+          - webcoach
+          - sitespeed.io
       pip:
           - ansible-lint
           - molecule
-          - docker-compose
-          - pbr
-          - parse
-          - sh
           - pre-commit
           - proselint
           - testinfra
@@ -127,6 +133,10 @@
           - rustfmt
 
   tasks:
+      - assert:
+          that:
+              - ansible_pkg_mgr == 'apt'
+
       - name: apt install
         when: apt is iterable and ansible_pkg_mgr == 'apt'
         become: yes
@@ -136,7 +146,6 @@
             state: latest
             purge: yes
             force: yes
-            install_recommends: no
             update_cache: yes
             cache_valid_time: 3600
 

@@ -3,6 +3,10 @@
   become: yes
   become_user: root
   tasks:
+  - assert:
+      that:
+      - ansible_pkg_mgr == 'apt'
+
   - name: apt install
     with_items:
     - plymouth

@@ -25,7 +25,7 @@ Installs packages with APT and different languages package managers.
 Skype
 =====
 
-Installs Skype from the Debian package, there's no repository.
+Installs the Skype Debian package since there's no repository.
 
 .. code:: shell
 
@@ -35,7 +35,7 @@ Can be added as a Cron job under root for updates.
 
 .. code:: shell
 
-    ansible-playbook --connection local --inventory-file localhsot, --verbose skype.yml | logger
+    ansible-playbook --connection local --inventory-file localhost, --verbose skype.yml | logger
 
 Dropbox
 =======

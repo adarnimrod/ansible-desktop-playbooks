@@ -2,6 +2,14 @@
 - hosts: all
   become: no
   tasks:
+      - assert:
+          that:
+              - ansible_architecture == 'x86_64'
+
+      - name: Verify that Python is installed
+        shell: python --version
+        changed_when: False
+
       - name: Download Dropbox tarball
         get_url:
             url: https://www.dropbox.com/download?plat=lnx.x86_64
@@ -21,3 +29,9 @@
             url: https://www.dropbox.com/download?dl=packages/dropbox.py
             dest: '{{ ansible_user_dir }}/.dropbox-dist/dropbox.py'
             mode: 0o0755
+
+      - name: Add autostart launcher
+        template:
+            src: dropbox.py.desktop.j2
+            dest: '{{ ansible_user_dir }}/.config/autostart/dropbox.py.desktop'
+            mode: 0o0644
