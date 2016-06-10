@@ -12,6 +12,7 @@
     - plymouth
     - network-manager
     - initramfs-tools
+    - ufw
     apt:
       name: '{{ item }}'
       state: present
@@ -25,6 +26,17 @@
       option: unmanaged-devices
       value: interface-name:docker0;interface-name:vboxnet0;interface-name:nspawnbr0:interface-name:lxcbr0
       state: present
+
+  - name: Allow local bridges access through the firewall
+    with_items:
+        - docker0
+        - vboxnet0
+        - nspawnbr0
+        - lxcbr0
+    ufw:
+        direction: in
+        interface: '{{ item }}'
+        rule: allow
 
   - name: Configure Plymouth
     ini_file:
