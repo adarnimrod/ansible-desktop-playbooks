@@ -26,6 +26,7 @@
           - dvd+rw-tools
           - easy-rsa
           - epiphany-browser
+          - expect
           - fabric
           - file-roller
           - firmware-intel-sound
