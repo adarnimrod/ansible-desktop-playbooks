@@ -37,6 +37,12 @@ Can be added as a Cron job under root for updates.
 
     ansible-playbook --connection local --inventory-file localhost, --verbose skype.yml | logger
 
+Or maybe even (always downloads the newest version from the Git repo).
+
+.. code:: shell
+
+    ansible-pull --url https://www.shore.co.il/git/ansible-desktop-playbooks --verbose skype.yml | logger
+
 Dropbox
 =======
 
