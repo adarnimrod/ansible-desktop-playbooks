@@ -72,6 +72,7 @@
           - network-manager-pptp-gnome
           - nodejs-legacy
           - npm
+          - ostree
           - pandoc
           - pelican
           - plymouth-themes
@@ -105,6 +106,7 @@
           - tmux
           - tox
           - twine
+          - udftools
           - ufw
           - uidmap
           - vcdimager
