@@ -105,7 +105,6 @@
           - time
           - tmux
           - tox
-          - twine
           - udftools
           - ufw
           - uidmap
@@ -131,6 +130,7 @@
           - pre-commit
           - proselint
           - testinfra
+          - twine
       pip3:
       cargo:
           - rustfmt
