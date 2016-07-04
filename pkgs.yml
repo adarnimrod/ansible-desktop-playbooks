@@ -126,10 +126,10 @@
           - sitespeed.io
       pip:
           - ansible-lint
-          - molecule
+          - molecule==1.4.2
           - pre-commit
           - proselint
-          - testinfra
+          - git+https://github.com/philpep/testinfra@ansible-vault
           - twine
       pip3:
       cargo:
