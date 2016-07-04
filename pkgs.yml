@@ -131,6 +131,8 @@
           - proselint
           - git+https://github.com/philpep/testinfra@ansible-vault
           - twine
+          - bcrypt
+          - passlib
       pip3:
       cargo:
           - rustfmt
