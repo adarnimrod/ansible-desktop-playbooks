@@ -126,7 +126,7 @@
           - sitespeed.io
       pip:
           - ansible-lint
-          - molecule==1.4.2
+          - molecule
           - pre-commit
           - proselint
           - git+https://github.com/philpep/testinfra@ansible-vault
