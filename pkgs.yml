@@ -15,6 +15,7 @@
           - cargo
           - clojure1.6
           - cmake
+          - containerd
           - cryptsetup
           - deborphan
           - dejadup
@@ -33,6 +34,7 @@
           - firmware-iwlwifi
           - firmware-linux
           - flake8
+          - flatpak-builder
           - ftp
           - geary
           - ghex
