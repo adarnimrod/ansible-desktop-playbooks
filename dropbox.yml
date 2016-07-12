@@ -27,7 +27,7 @@
       - name: Get Python Dropbox startup script
         get_url:
             url: https://www.dropbox.com/download?dl=packages/dropbox.py
-            dest: '{{ ansible_user_dir }}/.dropbox-dist/dropbox.py'
+            dest: '{{ ansible_user_dir }}/Downloads/dropbox.py'
             mode: 0o0755
 
       - name: Add autostart launcher
