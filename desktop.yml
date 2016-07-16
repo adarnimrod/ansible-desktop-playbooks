@@ -7,12 +7,27 @@
       that:
       - ansible_pkg_mgr == 'apt'
 
+  - name: Add libdvdcss APT repository key
+    apt_key:
+        url: http://download.videolan.org/pub/debian/videolan-apt.asc
+        state: present
+
+  - name: Add libdvdcss APT repository
+    with_items:
+        - deb
+        - deb-src
+    apt_repository:
+        repo: '{{ item }} http://download.videolan.org/pub/debian/stable/ /'
+        state: present
+        update_cache: yes
+
   - name: apt install
     with_items:
     - plymouth
     - network-manager
     - initramfs-tools
     - ufw
+    - libdvdcss2
     apt:
       name: '{{ item }}'
       state: present
