@@ -18,7 +18,7 @@
           - containerd
           - cryptsetup
           - deborphan
-          - dejadup
+          - deja-dup
           - dh-make
           - dnsmasq
           - dnsutils
@@ -49,7 +49,7 @@
           - gnome-maps
           - gnome-music
           - gnome-photos
-          - gnome-shell-extension-gpaste
+          - gnome-shell-extensions-gpaste
           - gnome-software
           - gnome-todo
           - gnome-weather
@@ -89,7 +89,7 @@
           - python-sh
           - python-virtualenv
           - reprepro
-          - resolveconf
+          - resolvconf
           - simple-scan
           - strongswan-nm
           - task-english
