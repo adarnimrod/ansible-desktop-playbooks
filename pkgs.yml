@@ -131,7 +131,7 @@
           - molecule==1.4.2
           - pre-commit
           - proselint
-          - git+https://github.com/philpep/testinfra@ansible-vault
+          - testinfra
           - twine
           - bcrypt
           - passlib
