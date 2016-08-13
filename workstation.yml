@@ -21,6 +21,7 @@
   - name: APT install
     with_items:
     - network-manager
+    - docker.io
     - ufw
     - libdvdcss2
     apt:
@@ -58,7 +59,6 @@
     - Restart Docker
 
   - name: Configure Docker graph directory
-    ignore_errors: True
     lineinfile:
       dest: /etc/default/docker
       line: 'DOCKER_OPTS="--graph {{ docker_graph_directory }}"'
