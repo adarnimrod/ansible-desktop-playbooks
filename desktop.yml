@@ -2,18 +2,7 @@
 - hosts: all
   become: yes
   become_user: root
-  vars:
-      docker_graph_mount: '/home/{{ ansible_env.SUDO_USER }}'
-      docker_graph_directory: '{{ docker_graph_mount }}/.bind_mounts/docker'
   handlers:
-  - name: Systemd daemon reload
-    command: /bin/systemctl daemon-reload
-
-  - name: Restart Docker
-    service:
-        name: docker
-        state: restarted
-
   - name: Update initramfs
     command: /usr/sbin/update-initramfs -u
 
@@ -42,35 +31,13 @@
   - name: APT install
     with_items:
     - plymouth
-    - network-manager
     - initramfs-tools
-    - ufw
     - libdvdcss2
     apt:
       name: '{{ item }}'
       state: present
       update_cache: yes
       cache_valid_time: 3600
-
-  - name: Set NetworkManager to ignore some interfaces
-    ini_file:
-      dest: /etc/NetworkManager/NetworkManager.conf
-      section: keyfile
-      option: unmanaged-devices
-      value: interface-name:docker0;interface-name:vboxnet0;interface-name:nspawnbr0:interface-name:lxcbr0
-      state: present
-
-  - name: Allow local bridges access through the firewall
-    with_items:
-        - docker0
-        - vboxnet0
-        - nspawnbr0
-        - lxcbr0
-    ufw:
-        direction: in
-        interface: '{{ item }}'
-        rule: allow
-
   - name: Configure Plymouth
     ini_file:
       dest: /etc/plymouth/plymouthd.conf
@@ -96,53 +63,3 @@
       name: /tmp
       src: none
       state: present
-
-  - name: Create Docker graph directory
-    file:
-      path: '{{ docker_graph_directory }}'
-      owner: root
-      group: root
-      mode: 0o711
-    notify:
-    - Restart Docker
-
-  - name: Configure Docker graph directory
-    ignore_errors: True
-    lineinfile:
-      dest: /etc/default/docker
-      line: 'DOCKER_OPTS="--graph {{ docker_graph_directory }}"'
-      regexp: '^DOCKER_OPTS='
-      state: present
-    notify:
-    - Restart Docker
-
-  - name: Create Systemd configuration override directories
-    with_items:
-    - docker.service
-    - dnsmasq.service
-    file:
-      path: '/etc/systemd/system/{{ item }}.d/'
-      owner: root
-      group: root
-      mode: 0o0755
-      state: directory
-
-  - name: Override docker.service Systemd configuration
-    template:
-      src: docker.service.d_Assertions.conf.j2
-      dest: /etc/systemd/system/docker.service.d/Assertions.conf
-      owner: root
-      group: root
-      mode: 0o0644
-    notify:
-    - Systemd daemon reload
-
-  - name: Override dnsmasq.service Systemd configuration
-    template:
-      src: dnsmasq.service.d_before-systemd-resovled.conf
-      dest: /etc/systemd/system/dnsmasq.service.d/before-systemd-resovled.conf
-      owner: root
-      group: root
-      mode: 0o0644
-    notify:
-    - Systemd daemon reload
