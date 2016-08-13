@@ -24,6 +24,7 @@
     - docker.io
     - ufw
     - libdvdcss2
+    - vagrant
     apt:
       name: '{{ item }}'
       state: present
@@ -97,3 +98,12 @@
       mode: 0o0644
     notify:
     - Systemd daemon reload
+
+  - name: Install Vagrant plugins
+    become: False
+    with_items:
+    - landrush
+    - vagrant-vbguest
+    - vagrant-gatling-rsync
+    command: 'vagrant plugin install {{ item }}'
+    changed_when: False
