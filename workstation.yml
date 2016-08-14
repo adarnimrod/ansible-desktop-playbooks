@@ -18,6 +18,7 @@
   - assert:
       that:
       - ansible_pkg_mgr == 'apt'
+
   - name: APT install
     with_items:
     - network-manager
@@ -25,6 +26,8 @@
     - ufw
     - libdvdcss2
     - vagrant
+    - dnsmasq
+    - resolvconf
     apt:
       name: '{{ item }}'
       state: present
