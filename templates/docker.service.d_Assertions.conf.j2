@@ -1,4 +1,4 @@
 [Unit]
-After=home-nimrod.mount
-AssertPathIsMountPoint={{ docker_graph_mount }}
+After=home-{{ ansible_env.SUDO_USER }}.mount
+AssertPathIsMountPoint={{  docker_graph_df.stdout_lines.1.split().5 }}
 AssertPathIsDirectory={{ docker_graph_directory }}

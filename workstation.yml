@@ -3,8 +3,7 @@
   become: yes
   become_user: root
   vars:
-      docker_graph_mount: '/home/{{ ansible_env.SUDO_USER }}'
-      docker_graph_directory: '{{ docker_graph_mount }}/.bind_mounts/docker'
+      docker_graph_directory: '/home/{{ ansible_env.SUDO_USER }}/.bind_mounts/docker'
   handlers:
   - name: Systemd daemon reload
     command: /bin/systemctl daemon-reload
@@ -70,6 +69,11 @@
       state: present
     notify:
     - Restart Docker
+
+  - name: Get Docker graph directory mountpoint
+    shell: df {{ docker_graph_directory }}
+    register: docker_graph_df
+    changed_when: False
 
   - name: Create Systemd configuration override directories
     with_items:
