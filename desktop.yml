@@ -62,4 +62,5 @@
       fstype: tmpfs
       name: /tmp
       src: none
+      opts: "defaults,nosuid,nodev"
       state: present
