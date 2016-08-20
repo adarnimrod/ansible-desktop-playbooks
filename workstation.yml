@@ -1,4 +1,6 @@
 ---
+- include: desktop.yml
+- include: pkgs.yml
 - hosts: all
   become: yes
   become_user: root
