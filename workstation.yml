@@ -15,6 +15,16 @@
         name: docker
         state: restarted
 
+  - name: Restart Landrush
+    service:
+        name: landrush
+        state: restarted
+
+  - name: Restart Dnsmasq
+    service:
+        name: dnsmasq
+        state: restarted
+
   tasks:
   - assert:
       that:
@@ -116,3 +126,30 @@
     - vagrant-gatling-rsync
     command: 'vagrant plugin install {{ item }}'
     changed_when: False
+
+  - name: Add Vagrant Landrush Systemd service
+    template:
+        src: landrush.service.j2
+        dest: /etc/systemd/system/landrush.service
+        owner: root
+        group: root
+        mode: 0o0644
+    notify:
+    - Systemd daemon reload
+    - Restart Landrush
+
+  - name: Enable Vagrant Landrush service
+    service:
+        name: landrush
+        state: started
+        enabled: yes
+
+  - name: Direct .vagrant TLD queries to Landrush
+    template:
+        src: landrush.j2
+        dest: /etc/dnsmasq.d/landrush
+        owner: root
+        group: root
+        mode: 0o0644
+    notify:
+        - Restart Dnsmasq
