@@ -22,6 +22,15 @@ Installs packages with APT and different languages package managers.
 
     ansible-playbook --ask-become-pass --connection local --inventory-file localhost, --verbose pkgs.yml
 
+Workstation
+===========
+
+Configures development tools (includes the desktop and packages playbooks).
+
+.. code:: shell
+
+    ansible-playbook --ask-become-pass --connection local --inventory-file localhost, --verbose workstation.yml
+
 Skype
 =====
 
