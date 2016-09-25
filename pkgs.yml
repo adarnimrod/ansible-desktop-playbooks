@@ -30,6 +30,7 @@
           - expect
           - fabric
           - file-roller
+          - firefoxdriver
           - firmware-intel-sound
           - firmware-iwlwifi
           - firmware-linux
@@ -77,15 +78,18 @@
           - ostree
           - pandoc
           - pelican
+          - phantomjs
           - plymouth-themes
           - polari
           - printer-driver-all
           - pry
           - python3-pip
+          - python3-selenium
           - python3-venv
           - python-dev
           - python-parse
           - python-pip
+          - python-selenium
           - python-sh
           - python-virtualenv
           - reprepro
