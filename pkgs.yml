@@ -24,6 +24,7 @@
           - dnsutils
           - docker-compose
           - dos2unix
+          - dstat
           - dvd+rw-tools
           - easy-rsa
           - epiphany-browser
@@ -140,6 +141,7 @@
           - twine
           - bcrypt
           - passlib
+          - yapf
       pip3:
       cargo:
           - rustfmt
