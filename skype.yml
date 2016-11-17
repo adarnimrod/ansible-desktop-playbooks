@@ -3,7 +3,8 @@
   become: yes
   become_user: root
   tasks:
-      - assert:
+      - name: Assertions
+        assert:
           that:
               - ansible_architecture in [ 'x86_64', 'x86' ]
               - ansible_pkg_mgr == 'apt'

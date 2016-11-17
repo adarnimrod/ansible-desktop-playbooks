@@ -1,0 +1,7 @@
+[Unit]
+Description=Vagrant Landrsuh DNS server
+AssertPathIsDirectory=/home/{{ ansible_env.SUDO_USER }}
+
+[Service] 
+Type=forking 
+ExecStart=/usr/bin/vagrant landrush start

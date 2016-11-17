@@ -16,7 +16,8 @@
         state: restarted
 
   tasks:
-  - assert:
+  - name: Assertions
+    assert:
       that:
       - ansible_pkg_mgr == 'apt'
 
@@ -73,7 +74,7 @@
     - Restart Docker
 
   - name: Get Docker graph directory mountpoint
-    shell: df {{ docker_graph_directory }}
+    command: df {{ docker_graph_directory }}
     register: docker_graph_df
     changed_when: False
 

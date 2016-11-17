@@ -2,12 +2,13 @@
 - hosts: all
   become: no
   tasks:
-      - assert:
+      - name: Assertions
+        assert:
           that:
               - ansible_architecture == 'x86_64'
 
       - name: Verify that Python is installed
-        shell: python --version
+        command: python --version
         changed_when: False
 
       - name: Download Dropbox tarball
@@ -18,11 +19,11 @@
         register: download_dropbox_tarball
 
       - name: Unpack Dropbox tarball
-        when: '{{ download_dropbox_tarball.changed }}'
         unarchive:
             copy: no
             dest: '{{ ansible_user_dir }}/'
             src: '{{ ansible_user_dir }}/Downloads/dropbox-lnx.x86_64.tar.gz'
+            creates: '{{ ansible_user_dir }}/.dropbox-dist/dropboxd'
 
       - name: Get Python Dropbox startup script
         get_url:

@@ -120,7 +120,7 @@
           - vim-nox
           - vinagre
           - virtualbox-qt
-          - xdg-user-dirs 
+          - xdg-user-dirs
       go:
           - github.com/giantswarm/semver-bump
           - github.com/nishanths/license
@@ -147,7 +147,8 @@
           - rustfmt
 
   tasks:
-      - assert:
+      - name: Assertions
+        assert:
           that:
               - ansible_pkg_mgr == 'apt'
 
@@ -157,7 +158,7 @@
         become_user: root
         apt:
             name: '{{ apt|join(" ") }}'
-            state: latest
+            state: present
             purge: yes
             force: yes
             update_cache: yes
@@ -165,7 +166,7 @@
 
       - name: go get
         when: go is iterable
-        shell: 'go get -u {{ go|join(" ") }}'
+        command: 'go get -u {{ go|join(" ") }}'
 
       - name: gem install
         when: gem is iterable
@@ -173,7 +174,7 @@
         become_user: root
         gem:
             name: '{{ gem|join(" ") }}'
-            state: latest
+            state: present
 
       - name: npm install
         when: npm is iterable
@@ -182,7 +183,7 @@
         npm:
             global: yes
             name: '{{ npm|join(" ") }}'
-            state: latest
+            state: present
 
       - name: pip install
         when: pip is iterable
@@ -190,7 +191,7 @@
         become_user: root
         pip:
             name: '{{ pip|join(" ") }}'
-            state: latest
+            state: present
 
       - name: pip3 install
         when: pip3 is iterable
@@ -198,7 +199,7 @@
         become_user: root
         pip:
             name: '{{ pip3|join(" ") }}'
-            state: latest
+            state: present
             executable: pip3
 
       - name: cargo install
