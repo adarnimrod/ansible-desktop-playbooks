@@ -7,10 +7,6 @@
           that:
               - ansible_architecture == 'x86_64'
 
-      - name: Verify that Python is installed
-        command: python --version
-        changed_when: False
-
       - name: Download Dropbox tarball
         get_url:
             url: https://www.dropbox.com/download?plat=lnx.x86_64
