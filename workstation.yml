@@ -20,6 +20,7 @@
     assert:
       that:
       - ansible_pkg_mgr == 'apt'
+      - ansible_service_mgr == 'systemd'
 
   - name: APT install
     with_items:
@@ -117,3 +118,17 @@
     - vagrant-gatling-rsync
     command: 'vagrant plugin install {{ item }}'
     changed_when: False
+
+  - name: Get Leiningen
+    get_url:
+        url: https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+        dest: /usr/local/bin/lein
+        owner: root
+        group: root
+        mode: 0o0755
+
+  - name: Install Leiningen
+    become: False
+    command: lein
+    register: install_leiningen
+    changed_when: "'Downloading Leiningen' in install_leiningen.stdout"
