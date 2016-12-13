@@ -3,15 +3,12 @@
   become: false
   vars:
       apt:
-          - ansible
           - apache2-utils
           - apt-listchanges
           - apt-xapian-index
-          - awscli
           - bijiben
           - bluez-firmware
           - brasero
-          - capistrano
           - cargo
           - clojure1.6
           - cmake
@@ -22,20 +19,16 @@
           - dh-make
           - dnsmasq
           - dnsutils
-          - docker-compose
           - dos2unix
           - dstat
           - dvd+rw-tools
           - easy-rsa
           - epiphany-browser
           - expect
-          - fabric
           - file-roller
-          - firefoxdriver
           - firmware-intel-sound
           - firmware-iwlwifi
           - firmware-linux
-          - flake8
           - flatpak-builder
           - ftp
           - geary
@@ -55,8 +48,12 @@
           - gnome-software
           - gnome-todo
           - gnome-weather
+          - gnupg2
           - golang
+          - gpgv
+          - graphviz
           - grub-efi-amd64
+          - gstreamer1.0-libav
           - gstreamer1.0-vaapi
           - hunspell
           - hyphen-en-us
@@ -64,6 +61,7 @@
           - keepass2
           - kpcli
           - libnss-resolve
+          - libnss-systemd
           - libpam-mount
           - libreoffice-pdfimport
           - linux-image-amd64
@@ -78,23 +76,24 @@
           - npm
           - ostree
           - pandoc
-          - pelican
           - phantomjs
           - plymouth-themes
           - polari
           - printer-driver-all
-          - pry
+          - python3-cffi
+          - python3-cryptography
           - python3-pip
-          - python3-selenium
           - python3-venv
+          - python-cffi
+          - python-cryptography
           - python-dev
-          - python-parse
           - python-pip
-          - python-selenium
-          - python-sh
           - python-virtualenv
           - reprepro
           - resolvconf
+          - ruby-ffi
+          - ruby-full
+          - screen
           - simple-scan
           - strongswan-nm
           - task-english
@@ -106,8 +105,11 @@
           - task-print-server
           - task-ssh-server
           - telnet
-          - texlive-latex-base
+          - texlive-extra-utils
           - texlive-fonts-recommended
+          - texlive-font-utils
+          - texlive-latex-base
+          - texlive-latex-extra
           - texlive-luatex
           - time
           - tmux
@@ -120,29 +122,56 @@
           - vim-nox
           - vinagre
           - virtualbox-qt
+          - vlc
           - xdg-user-dirs
       go:
           - github.com/giantswarm/semver-bump
           - github.com/nishanths/license
           - github.com/tmrts/boilr
       gem:
+          - bundler
+          - capistrano
+          - pry
+          - rake
+          - travis
       npm:
           - yo
+          - generator-generator
           - grunt-cli
           - gulp
           - webcoach
           - sitespeed.io
       pip:
+          - ansible
+          - ansible-container
           - ansible-lint
-          - molecule
-          - pre-commit
-          - proselint
-          - testinfra
-          - twine
           - bcrypt
+          - boto
+          - boto3
+          - docker-py
+          - Fabric
+          - flake8
+          - kappa
+          - molecule
           - passlib
-          - yapf
+          - proselint
+          - python-vagrant
+          - testinfra
       pip3:
+          - awscli
+          - awslogs
+          - docker-compose
+          - flake8
+          - parse
+          - pelican
+          - pre-commit
+          - piprot
+          - selenium
+          - sh
+          - template
+          - tox
+          - twine
+          - yapf
       cargo:
           - rustfmt
 
@@ -153,7 +182,7 @@
               - ansible_pkg_mgr == 'apt'
 
       - name: apt install
-        when: apt is iterable and ansible_pkg_mgr == 'apt'
+        when: apt is iterable
         become: yes
         become_user: root
         apt:
