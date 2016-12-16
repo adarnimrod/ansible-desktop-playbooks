@@ -151,8 +151,10 @@
           - docker-py
           - Fabric
           - flake8
+          - hashlib
           - kappa
           - molecule
+          - netaddr
           - passlib
           - proselint
           - python-vagrant
