@@ -156,6 +156,7 @@
           - molecule
           - netaddr
           - passlib
+          - pre-commit
           - proselint
           - python-vagrant
           - testinfra
@@ -166,7 +167,6 @@
           - flake8
           - parse
           - pelican
-          - pre-commit
           - piprot
           - selenium
           - sh
