@@ -150,14 +150,10 @@
           - boto3
           - docker-py
           - Fabric
-          - flake8
           - hashlib
-          - kappa
           - molecule
           - netaddr
           - passlib
-          - pre-commit
-          - proselint
           - python-vagrant
           - testinfra
       pip3:
@@ -165,9 +161,12 @@
           - awslogs
           - docker-compose
           - flake8
+          - kappa
           - parse
           - pelican
           - piprot
+          - pre-commit
+          - proselint
           - selenium
           - sh
           - template
