@@ -149,7 +149,6 @@
           - boto
           - boto3
           - docker-py
-          - Fabric
           - hashlib
           - molecule
           - netaddr
@@ -160,6 +159,7 @@
           - awscli
           - awslogs
           - docker-compose
+          - Fabric3
           - flake8
           - kappa
           - parse
