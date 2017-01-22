@@ -11,7 +11,7 @@
           - bluez-firmware
           - brasero
           - cargo
-          - clojure1.6
+          - clojure
           - cmake
           - containerd
           - cryptsetup
@@ -150,7 +150,6 @@
           - boto
           - boto3
           - docker-py
-          - hashlib
           - molecule
           - netaddr
           - passlib
@@ -184,11 +183,12 @@
               - ansible_pkg_mgr == 'apt'
 
       - name: apt install
+        with_items: '{{ apt }}'
         when: apt is iterable
         become: yes
         become_user: root
         apt:
-            name: '{{ apt|join(" ") }}'
+            name: '{{ item }}'
             state: present
             purge: yes
             force: yes
@@ -200,36 +200,40 @@
         command: 'go get -u {{ go|join(" ") }}'
 
       - name: gem install
+        with_items: '{{ gem }}'
         when: gem is iterable
         become: yes
         become_user: root
         gem:
-            name: '{{ gem|join(" ") }}'
+            name: '{{ item }}'
             state: present
 
       - name: npm install
+        with_items: '{{ npm }}'
         when: npm is iterable
         become: yes
         become_user: root
         npm:
             global: yes
-            name: '{{ npm|join(" ") }}'
+            name: '{{ item }}'
             state: present
 
       - name: pip install
+        with_items: '{{ pip }}'
         when: pip is iterable
         become: yes
         become_user: root
         pip:
-            name: '{{ pip|join(" ") }}'
+            name: '{{ item }}'
             state: present
 
       - name: pip3 install
+        with_items: '{{ pip3 }}'
         when: pip3 is iterable
         become: yes
         become_user: root
         pip:
-            name: '{{ pip3|join(" ") }}'
+            name: '{{ item }}'
             state: present
             executable: pip3
 
