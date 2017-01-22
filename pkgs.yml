@@ -3,6 +3,7 @@
   become: false
   vars:
       apt:
+          - adb
           - apache2-utils
           - apt-listchanges
           - apt-xapian-index
