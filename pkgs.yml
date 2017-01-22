@@ -169,7 +169,7 @@
           - proselint
           - selenium
           - sh
-          - template
+          #- template
           - tox
           - twine
           - yapf
@@ -183,12 +183,11 @@
               - ansible_pkg_mgr == 'apt'
 
       - name: apt install
-        with_items: '{{ apt }}'
         when: apt is iterable
         become: yes
         become_user: root
         apt:
-            name: '{{ item }}'
+            name: '{{ apt }}'
             state: present
             purge: yes
             force: yes
@@ -198,6 +197,8 @@
       - name: go get
         when: go is iterable
         command: 'go get -u {{ go|join(" ") }}'
+        register: go_get
+        changed_when: "'get' in go_get"
 
       - name: gem install
         with_items: '{{ gem }}'
@@ -207,6 +208,7 @@
         gem:
             name: '{{ item }}'
             state: present
+            include_dependencies: yes
 
       - name: npm install
         with_items: '{{ npm }}'
@@ -219,21 +221,19 @@
             state: present
 
       - name: pip install
-        with_items: '{{ pip }}'
         when: pip is iterable
         become: yes
         become_user: root
         pip:
-            name: '{{ item }}'
+            name: '{{ pip }}'
             state: present
 
       - name: pip3 install
-        with_items: '{{ pip3 }}'
         when: pip3 is iterable
         become: yes
         become_user: root
         pip:
-            name: '{{ item }}'
+            name: '{{ pip3 }}'
             state: present
             executable: pip3
 
@@ -241,3 +241,6 @@
         when: cargo is iterable
         become: no
         command: '/usr/bin/cargo install {{ cargo|join(" ") }}'
+        register: cargo_install
+        failed_when: cargo_install.rc > 0 and not 'already exists in destination' in cargo_install.stderr
+        changed_when: cargo_install.rc == 0
