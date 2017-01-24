@@ -169,7 +169,7 @@
           - proselint
           - selenium
           - sh
-          #- template
+          - template
           - tox
           - twine
           - yapf
