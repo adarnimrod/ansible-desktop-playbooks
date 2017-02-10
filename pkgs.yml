@@ -142,7 +142,7 @@
           - gulp
           - webcoach
           - sitespeed.io
-      pip:
+      pip2:
           - ansible
           - ansible-container
           - ansible-lint
@@ -220,13 +220,14 @@
             name: '{{ item }}'
             state: present
 
-      - name: pip install
-        when: pip is iterable
+      - name: pip2 install
+        when: pip2 is iterable
         become: yes
         become_user: root
         pip:
-            name: '{{ pip }}'
+            name: '{{ pip2 }}'
             state: present
+            execuable: pip2
 
       - name: pip3 install
         when: pip3 is iterable
