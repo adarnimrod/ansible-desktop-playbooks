@@ -150,6 +150,7 @@
           - boto
           - boto3
           - docker-py
+          - gordon
           - molecule
           - netaddr
           - passlib
@@ -161,7 +162,6 @@
           - docker-compose
           - Fabric3
           - flake8
-          - kappa
           - parse
           - pelican
           - piprot
