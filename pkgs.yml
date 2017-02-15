@@ -114,7 +114,6 @@
           - texlive-luatex
           - time
           - tmux
-          - tox
           - udftools
           - ufw
           - uidmap
