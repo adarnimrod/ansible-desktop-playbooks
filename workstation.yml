@@ -31,6 +31,7 @@
     - vagrant
     - dnsmasq
     - resolvconf
+    - libnotify-bin
     apt:
       name: '{{ item }}'
       state: present
