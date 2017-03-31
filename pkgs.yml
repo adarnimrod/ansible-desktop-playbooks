@@ -166,6 +166,7 @@
           - piprot
           - pre-commit
           - proselint
+          - pur
           - selenium
           - sh
           - template
