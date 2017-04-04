@@ -47,6 +47,7 @@
           - gnome-photos
           - gnome-shell-extensions-gpaste
           - gnome-software
+          - gnome-software-plugin-flatpak
           - gnome-todo
           - gnome-weather
           - gnupg2
