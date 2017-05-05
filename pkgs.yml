@@ -97,6 +97,7 @@
           - ruby-full
           - screen
           - simple-scan
+          - shellcheck
           - strongswan-nm
           - task-english
           - task-hebrew
