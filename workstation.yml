@@ -43,7 +43,7 @@
       dest: /etc/NetworkManager/NetworkManager.conf
       section: keyfile
       option: unmanaged-devices
-      value: interface-name:docker0;interface-name:vboxnet0;interface-name:nspawnbr0:interface-name:lxcbr0
+      value: interface-name:docker*;interface-name:vboxnet*;interface-name:nspawnbr*;interface-name:lxcbr0;interface-name:veth*
       state: present
 
   - name: Allow local bridges access through the firewall
