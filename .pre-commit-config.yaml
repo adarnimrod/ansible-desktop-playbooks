@@ -2,8 +2,6 @@
     sha: v0.7.1
     hooks:
     -   id: check-added-large-files
-    -   id: check-json
-    -   id: check-xml
     -   id: check-yaml
     -   id: check-merge-conflict
     -   id: check-symlinks
