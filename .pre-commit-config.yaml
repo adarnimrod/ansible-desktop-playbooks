@@ -9,8 +9,9 @@
     sha: v0.6.0
     hooks:
     -   id: ansible-syntax-check
-        files: \.yml$
+        files: &playbooks desktop|dropbox|pkgs|skype|workstation
 -   repo: https://github.com/willthames/ansible-lint
     sha: v3.4.13
     hooks:
     -   id: ansible-lint
+        files: *playbooks
