@@ -1,6 +1,9 @@
 ansible-desktop-playbooks
 #########################
 
+.. image:: https://travis-ci.org/adarnimrod/ansible-desktop-playbooks.svg?branch=master
+    :target: https://travis-ci.org/adarnimrod/ansible-desktop-playbooks
+
 Ansible playbooks for setting up new desktops.
 
 Desktop
