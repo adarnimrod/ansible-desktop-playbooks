@@ -11,6 +11,7 @@
           - bluez-firmware
           - brasero
           - cargo
+          - chromium-driver
           - clojure
           - cmake
           - containerd
