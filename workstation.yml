@@ -58,11 +58,21 @@
         rule: allow
 
   - name: Create Docker graph directory
+    with_items:
+        - path: '{{ docker_graph_directory|basename }}'
+          owner: '{{ ansible_env.SUDO_USER }}'
+          group: '{{ ansible_env.SUDO_USER }}'
+          mode: 0o0755
+        - path: '{{ docker_graph_directory }}'
+          owner: root
+          group: root
+          mode: 0o0711
     file:
-      path: '{{ docker_graph_directory }}'
-      owner: root
-      group: root
-      mode: 0o711
+        path: '{{ item.path }}'
+        owner: '{{ item.owner }}'
+        group: '{{ item.group }}'
+        mode: '{{ item.mode }}'
+        state: directory
     notify:
     - Restart Docker
 

@@ -2,11 +2,13 @@
 - hosts: all
   become: false
   vars:
+      gopath: '{{ ansible_user_dir }}/Documents/Golang'
       apt:
           - adb
           - apache2-utils
           - apt-listchanges
           - apt-xapian-index
+          - aptitude
           - bijiben
           - bluez-firmware
           - brasero
@@ -70,6 +72,7 @@
           - linux-image-amd64
           - liferea
           - luarocks
+          - lynx
           - meld
           - mythes-en-us
           - netcat-openbsd
@@ -197,11 +200,18 @@
             update_cache: yes
             cache_valid_time: 3600
 
+      - name: Create the GOPATH directory
+        file:
+            path: '{{ gopath }}'
+            state: directory
+
       - name: go get
         when: go is iterable
         command: 'go get -u {{ go|join(" ") }}'
         register: go_get
         changed_when: "'get' in go_get"
+        environment:
+            GOPATH: '{{ gopath }}'
 
       - name: gem install
         with_items: '{{ gem }}'
