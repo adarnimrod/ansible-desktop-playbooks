@@ -167,6 +167,7 @@
           - docker-compose
           - Fabric3
           - flake8
+          - httpie
           - parse
           - pelican
           - piprot
