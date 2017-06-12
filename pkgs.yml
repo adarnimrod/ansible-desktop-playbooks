@@ -85,6 +85,7 @@
           - phantomjs
           - plymouth-themes
           - polari
+          - postgresql-client
           - printer-driver-all
           - python3-cffi
           - python3-cryptography
