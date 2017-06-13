@@ -9,6 +9,7 @@
           - apt-listchanges
           - apt-xapian-index
           - aptitude
+          - bats
           - bijiben
           - bluez-firmware
           - brasero
