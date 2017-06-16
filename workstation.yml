@@ -57,6 +57,13 @@
         interface: '{{ item }}'
         rule: allow
 
+  - name: Add user to the docker group
+    user:
+        name: '{{ ansible_env.SUDO_USER }}'
+        groups: docker
+        append: True
+        state: present
+
   - name: Create Docker graph directory
     with_items:
         - path: '{{ docker_graph_directory|basename }}'
