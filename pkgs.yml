@@ -63,6 +63,7 @@
           - gstreamer1.0-vaapi
           - hunspell
           - hyphen-en-us
+          - ipcalc
           - iputils-ping
           - keepass2
           - kpcli
@@ -172,6 +173,7 @@
           - httpie
           - parse
           - pelican
+          - pipenv
           - piprot
           - pre-commit
           - proselint
