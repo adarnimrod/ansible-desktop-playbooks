@@ -71,6 +71,7 @@
           - libnss-systemd
           - libpam-mount
           - libreoffice-pdfimport
+          - liburi-perl
           - linux-image-amd64
           - liferea
           - luarocks
