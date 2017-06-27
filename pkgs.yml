@@ -132,6 +132,7 @@
           - vinagre
           - virtualbox-qt
           - vlc
+          - whois
           - xdg-user-dirs
       go:
           - github.com/giantswarm/semver-bump
