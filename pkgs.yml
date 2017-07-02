@@ -63,6 +63,7 @@
           - gstreamer1.0-vaapi
           - hunspell
           - hyphen-en-us
+          - ipcalc
           - iputils-ping
           - keepass2
           - kpcli
@@ -70,6 +71,7 @@
           - libnss-systemd
           - libpam-mount
           - libreoffice-pdfimport
+          - liburi-perl
           - linux-image-amd64
           - liferea
           - luarocks
@@ -131,6 +133,7 @@
           - vinagre
           - virtualbox-qt
           - vlc
+          - whois
           - xdg-user-dirs
       go:
           - github.com/giantswarm/semver-bump
@@ -172,6 +175,7 @@
           - httpie
           - parse
           - pelican
+          - pipenv
           - piprot
           - pre-commit
           - proselint
