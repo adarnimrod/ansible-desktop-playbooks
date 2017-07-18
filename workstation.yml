@@ -21,6 +21,7 @@
       that:
       - ansible_pkg_mgr == 'apt'
       - ansible_service_mgr == 'systemd'
+      - ansible_architecture == 'x86_64'
 
   - name: APT install
     with_items:
@@ -151,3 +152,19 @@
     command: lein
     register: install_leiningen
     changed_when: "'Downloading Leiningen' in install_leiningen.stdout"
+
+  - name: Download Packer zip
+    get_url:
+        url: https://releases.hashicorp.com/packer/1.0.2/packer_1.0.2_linux_amd64.zip
+        dest: /root/packer.zip
+        owner: root
+        group: root
+        mode: 0o0644
+
+  - name: Unarchive Packer zip
+    unarchive:
+        src: /root/packer.zip
+        dest: /usr/local/bin/
+        remote_src: True
+        owner: root
+        group: root
