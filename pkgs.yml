@@ -139,6 +139,7 @@
           - github.com/giantswarm/semver-bump
           - github.com/nishanths/license
           - github.com/tmrts/boilr
+          - github.com/scaleway/scaleway-cli/scw
       gem:
           - bundler
           - capistrano
