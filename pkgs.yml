@@ -124,6 +124,7 @@
           - texlive-luatex
           - time
           - tmux
+          - transmission-cli
           - udftools
           - ufw
           - uidmap
