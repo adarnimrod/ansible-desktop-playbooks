@@ -86,7 +86,7 @@
 
   - name: Configure Docker graph directory
     copy:
-        content: "{{ {'data-root': docker_graph_directory}|to_json }}"
+        content: "{{ {'data-root': docker_graph_directory}|to_nice_json }}"
         dest: /etc/docker/daemon.json
         owner: root
         group: root
