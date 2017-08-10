@@ -10,3 +10,4 @@ __pycache__
 .vagrant/
 *.log
 *.retry
+skype.flatpakref

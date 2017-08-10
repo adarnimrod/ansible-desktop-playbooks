@@ -9,39 +9,18 @@
               - ansible_architecture in [ 'x86_64', 'x86' ]
               - ansible_pkg_mgr == 'apt'
 
-      - name: Add i386 architecture to dpkg
-        command: /usr/bin/dpkg --add-architecture i386
-        changed_when: False
-
-      - name: APT install dependencies
-        with_items:
-            - libc6:i386
-            - libqt4-dbus:i386
-            - libqt4-network:i386
-            - libqt4-xml:i386
-            - libqtcore4:i386
-            - libqtgui4:i386
-            - libqtwebkit4:i386
-            - libstdc++6:i386
-            - libx11-6:i386
-            - libxext6:i386
-            - libxss1:i386
-            - libxv1:i386
-            - libssl1.0.0:i386
-            - libpulse0:i386
-            - libasound2-plugins:i386
+      - name: APT install Flatpak
         apt:
-            name: '{{ item }}'
+            name: flatpak
             state: present
             update_cache: yes
             cache_valid_time: 3600
 
-      - name: Get Skype Debian package
-        get_url:
-            src: http://www.skype.com/go/getskype-linux-deb
-            dest: /root/skype.deb
-
-      - name: Install Skype Debian package
-        apt:
-            deb: /root/skype.deb
-            state: present
+      - name: Install
+        become: False
+        command: |
+            flatpak install --user --from https://s3.amazonaws.com/alexlarsson/skype-repo/skype.flatpakref
+        register: skype_flatpak_install
+        changed_when: |
+            'Installing' in skype_flatpak_install.stdout
+        failed_when: skype_flatpak_install.rc|int > 0 and 'already installed' not in skype_flatpak_install.stderr
