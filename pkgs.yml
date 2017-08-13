@@ -232,6 +232,15 @@
             state: present
             include_dependencies: yes
 
+      - name: Update npm
+        become: yes
+        become_user: root
+        npm:
+            global: yes
+            name: npm
+            state: present
+            version: '>=5'
+
       - name: npm install
         with_items: '{{ npm }}'
         when: npm is iterable
