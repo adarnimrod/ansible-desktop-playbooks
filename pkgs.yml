@@ -85,7 +85,6 @@
           - npm
           - ostree
           - pandoc
-          - phantomjs
           - plymouth-themes
           - polari
           - postgresql-client
