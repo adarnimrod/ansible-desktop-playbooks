@@ -9,7 +9,7 @@
     sha: v0.6.0
     hooks:
     -   id: ansible-syntax-check
-        files: &playbooks 'desktop.yml|dropbox\.yml|pkgs\.yml|skype\.yml|workstation\.yml'
+        files: &playbooks 'desktop.yml|dropbox\.yml|pkgs\.yml|skype\.yml|workstation\.yml|vscode\.yml'
 -   repo: https://github.com/willthames/ansible-lint
     sha: v3.4.13
     hooks:

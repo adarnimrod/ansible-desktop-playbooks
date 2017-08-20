@@ -63,3 +63,13 @@ Installs Dropbox headless.
 .. code:: shell
 
     ansible-playbook --connection local --inventory-file localhost, --verbose dropbox.yml
+
+
+VSCode
+======
+
+Installs `Visual Studio Code <https://code.visualstudio.com/>`_ from APT repo.
+
+.. code:: shell
+
+    ansible-playbook --connection local --inventory-file localhos, --verbose vscode.yml
