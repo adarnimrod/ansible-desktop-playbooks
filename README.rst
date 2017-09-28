@@ -37,23 +37,20 @@ Configures development tools (includes the desktop and packages playbooks).
 Skype
 =====
 
-Installs the Skype Debian package since there's no repository.
+Install Skype flatpak from flathub..
 
 .. code:: shell
 
     ansible-playbook --ask-become-pass --connection local --inventory-file localhost, --verbose skype.yml
 
-Can be added as a Cron job under root for updates.
+Slack
+=====
+
+Install Slack desktop flatpak from flathub..
 
 .. code:: shell
 
-    ansible-playbook --connection local --inventory-file localhost, --verbose skype.yml | logger
-
-Or maybe even (always downloads the newest version from the Git repo).
-
-.. code:: shell
-
-    ansible-pull --url https://www.shore.co.il/git/ansible-desktop-playbooks --verbose skype.yml | logger
+    ansible-playbook --ask-become-pass --connection local --inventory-file localhost, --verbose slack.yml
 
 Dropbox
 =======
