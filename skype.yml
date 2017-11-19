@@ -25,7 +25,7 @@
       - name: Install
         become: False
         command: |
-            flatpak install --user flathub com.skype.Client
+            flatpak install --user --assumeyes flathub com.skype.Client
         register: skype_flatpak_install
         changed_when: |
             'Installing' in skype_flatpak_install.stdout
