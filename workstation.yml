@@ -8,7 +8,8 @@
       docker_graph_directory: '/home/{{ ansible_env.SUDO_USER }}/.bind_mounts/docker'
   handlers:
   - name: Systemd daemon reload
-    command: /bin/systemctl daemon-reload
+    systemd:
+        daemon_reload: yes
 
   - name: Restart Docker
     service:
@@ -22,6 +23,7 @@
       - ansible_pkg_mgr == 'apt'
       - ansible_service_mgr == 'systemd'
       - ansible_architecture == 'x86_64'
+      - ansible_version.full | version_compare('2.4', '>=')
 
   - name: APT install
     with_items:
