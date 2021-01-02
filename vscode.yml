@@ -1,29 +1,30 @@
 ---
 - hosts: all
-  become: yes
+  become: true
   become_user: root
   tasks:
-  - name: Assertions
-    assert:
-      that:
+    - name: Assertions
+      assert:
+        that:
           - ansible_architecture == 'x86_64'
           - ansible_pkg_mgr == 'apt'
 
-  - name: Add repo key
-    apt_key:
+    - name: Add repo key
+      apt_key:
         url: https://packages.microsoft.com/keys/microsoft.asc
         state: present
 
-  - name: Add repo
-    apt_repository:
+    - name: Add repo
+      apt_repository:
+        # yamllint disable-line rule:line-length
         repo: deb [arch=amd64] http://packages.microsoft.com/repos/vscode stable main
         state: present
-        update_cache: True
+        update_cache: true
 
-  - name: APT install
-    apt:
+    - name: APT install
+      apt:
         name: code
         state: present
-        install_recommends: False
-        update_cache: True
+        install_recommends: false
+        update_cache: true
         cache_valid_time: 3600

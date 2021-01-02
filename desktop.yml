@@ -1,84 +1,90 @@
 ---
 - hosts: all
-  become: yes
+  become: true
   become_user: root
   handlers:
-  - name: Update initramfs
-    command: /usr/sbin/update-initramfs -u
+    - name: Update initramfs
+      command: /usr/sbin/update-initramfs -u
 
-  - name: Update GRUB
-    command: /usr/sbin/update-grub
+    - name: Update GRUB
+      command: /usr/sbin/update-grub
 
   tasks:
-  - name: Assertions
-    assert:
-      that:
-      - ansible_pkg_mgr == 'apt'
+    - name: Assertions
+      assert:
+        that:
+          - ansible_pkg_mgr == 'apt'
 
-  - name: Add libdvdcss APT repository key
-    apt_key:
+    - name: Add libdvdcss APT repository key
+      apt_key:
         url: http://download.videolan.org/pub/debian/videolan-apt.asc
         state: present
 
-  - name: Add libdvdcss APT repository
-    with_items:
+    - name: Add libdvdcss APT repository
+      with_items:
         - deb
         - deb-src
-    apt_repository:
+      apt_repository:
         repo: '{{ item }} http://download.videolan.org/pub/debian/stable/ /'
         state: present
-        update_cache: yes
+        update_cache: true
 
-  - name: Add the Debian experimental suite repository
-    with_items:
+    - name: Add the Debian experimental suite repository
+      with_items:
         - deb
         - deb-src
-    apt_repository:
+      apt_repository:
         repo: '{{ item }} http://httpredir.debian.org/debian experimental main'
         state: present
-        update_cache: yes
+        update_cache: true
 
-  - name: Prioritize browsers from the Debian experimental suite
-    template:
+    - name: Prioritize browsers from the Debian experimental suite
+      template:
         src: experimental.j2
         dest: /etc/apt/preferences.d/experimental
         owner: root
         group: root
         mode: 0o0644
 
-  - name: APT install
-    with_items:
-    - plymouth
-    - initramfs-tools
-    - libdvdcss2
-    apt:
-      name: '{{ item }}'
-      state: present
-      update_cache: yes
-      cache_valid_time: 3600
-  - name: Configure Plymouth
-    ini_file:
-      dest: /etc/plymouth/plymouthd.conf
-      section: Daemon
-      option: Theme
-      value: spinner
-    register: configure_plymouth
+    - name: APT install
+      with_items:
+        - plymouth
+        - initramfs-tools
+        - libdvdcss2
+      apt:
+        name: '{{ item }}'
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+    - name: Configure Plymouth
+      ini_file:
+        dest: /etc/plymouth/plymouthd.conf
+        section: Daemon
+        option: Theme
+        value: spinner
+      register: configure_plymouth
 
-  - name: Configure GRUB
-    with_dict:
-      GRUB_TIMEOUT: 1
-      GRUB_CMDLINE_LINUX_DEFAULT: 'quiet cgroup_enable=memory splash allow-discards root_trim=yes swapaccount=1'
-    lineinfile:
-      dest: /etc/default/grub
-      line: '{{ item.key }}="{{ item.value }}"'
-      regexp: '^{{ item.key }}='
-      state: present
-    register: configure_grub
+    - name: Configure GRUB
+      with_dict:
+        GRUB_TIMEOUT: 1
+        GRUB_CMDLINE_LINUX_DEFAULT: >-
+          quiet
+          cgroup_enable=memory
+          splash
+          allow-discards
+          root_trim=yes
+          swapaccount=1
+      lineinfile:
+        dest: /etc/default/grub
+        line: '{{ item.key }}="{{ item.value }}"'
+        regexp: '^{{ item.key }}='
+        state: present
+      register: configure_grub
 
-  - name: Make /tmp tmpfs mount
-    mount:
-      fstype: tmpfs
-      name: /tmp
-      src: none
-      opts: "defaults,nosuid,nodev"
-      state: present
+    - name: Make /tmp tmpfs mount
+      mount:
+        fstype: tmpfs
+        name: /tmp
+        src: none
+        opts: "defaults,nosuid,nodev"
+        state: present

@@ -1,18 +1,55 @@
+---
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
-    sha: v1.1.1
+  - repo: https://github.com/pre-commit/pre-commit-hooks.git
+    rev: v3.4.0
     hooks:
-    -   id: check-added-large-files
-    -   id: check-yaml
-    -   id: check-merge-conflict
-    -   id: check-symlinks
--   repo: https://www.shore.co.il/git/ansible-pre-commit
-    sha: v0.7.0
+      - id: check-added-large-files
+      - id: check-executables-have-shebangs
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: trailing-whitespace
+
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v0.14.3
     hooks:
-    -   id: ansible-syntax-check
-        files: &playbooks 'desktop.yml|dropbox\.yml|pkgs\.yml|skype\.yml|workstation\.yml|vscode\.yml'
--   repo: https://github.com/willthames/ansible-lint
-    sha: v3.4.16
+      - id: detect-secrets
+
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.25.0
     hooks:
-    -   id: ansible-lint
+      - id: yamllint
+
+  - repo: https://github.com/amperser/proselint/
+    rev: 0.10.2
+    hooks:
+      - id: proselint
+        types: [plain-text]
+        exclude: LICENSE
+
+  - repo: https://github.com/executablebooks/mdformat.git
+    rev: 0.5.3
+    hooks:
+      - id: mdformat
+
+  - repo: https://git.shore.co.il/nimrod/shell-pre-commit.git
+    rev: v0.6.0
+    hooks:
+      - id: shell-lint
+
+  - repo: https://github.com/shellcheck-py/shellcheck-py.git
+    rev: v0.7.1.1
+    hooks:
+      - id: shellcheck
+
+  - repo: https://git.shore.co.il/ansible/ansible-pre-commit.git
+    rev: v0.10.0
+    hooks:
+      - id: ansible-syntax-check
+        files: &playbooks |-
+          'desktop.yml|dropbox\.yml|pkgs\.yml|skype\.yml|workstation\.yml|vscode\.yml'
+
+  - repo: https://github.com/ansible/ansible-lint
+    rev: v4.3.7
+    hooks:
+      - id: ansible-lint
         files: *playbooks

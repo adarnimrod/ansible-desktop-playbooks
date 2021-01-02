@@ -2,276 +2,279 @@
 - hosts: all
   become: false
   vars:
-      gopath: '{{ ansible_user_dir }}/Documents/Golang'
-      apt:
-          - adb
-          - apache2-utils
-          - apt-listchanges
-          - apt-xapian-index
-          - aptitude
-          - bats
-          - bijiben
-          - bluez-firmware
-          - brasero
-          - cargo
-          - chromium-driver
-          - clojure
-          - cmake
-          - containerd
-          - cryptsetup
-          - deborphan
-          - deja-dup
-          - dh-make
-          - dnsmasq
-          - dnsutils
-          - dos2unix
-          - dstat
-          - dvd+rw-tools
-          - easy-rsa
-          - epiphany-browser
-          - expect
-          - file-roller
-          - firmware-intel-sound
-          - firmware-iwlwifi
-          - firmware-linux
-          - flatpak-builder
-          - ftp
-          - geary
-          - ghex
-          - git-annex
-          - git-buildpackage
-          - gnome-boxes
-          - gnome-calendar
-          - gnome-clocks
-          - gnome-core
-          - gnome-documents
-          - gnome-logs
-          - gnome-maps
-          - gnome-music
-          - gnome-photos
-          - gnome-shell-extensions-gpaste
-          - gnome-software
-          - gnome-software-plugin-flatpak
-          - gnome-todo
-          - gnome-weather
-          - gnupg2
-          - golang
-          - gpgv
-          - graphviz
-          - grub-efi-amd64
-          - gstreamer1.0-libav
-          - gstreamer1.0-vaapi
-          - hunspell
-          - hyphen-en-us
-          - ipcalc
-          - iputils-ping
-          - keepass2
-          - kpcli
-          - libnss-resolve
-          - libnss-systemd
-          - libpam-mount
-          - libreoffice-pdfimport
-          - liburi-perl
-          - linux-image-amd64
-          - liferea
-          - luarocks
-          - lynx
-          - meld
-          - mythes-en-us
-          - netcat-openbsd
-          - network-manager-gnome
-          - network-manager-pptp-gnome
-          - nodejs-legacy
-          - npm
-          - ostree
-          - pandoc
-          - plymouth-themes
-          - polari
-          - postgresql-client
-          - printer-driver-all
-          - python3-cffi
-          - python3-cryptography
-          - python3-pip
-          - python3-venv
-          - python-cffi
-          - python-cryptography
-          - python-dev
-          - python-pip
-          - python-virtualenv
-          - reprepro
-          - resolvconf
-          - ruby-ffi
-          - ruby-full
-          - screen
-          - simple-scan
-          - shellcheck
-          - strongswan-nm
-          - task-english
-          - task-hebrew
-          - task-hebrew-desktop
-          - task-hebrew-gnome-desktop
-          - task-gnome-desktop
-          - task-laptop
-          - task-print-server
-          - task-ssh-server
-          - telnet
-          - texlive-extra-utils
-          - texlive-fonts-recommended
-          - texlive-font-utils
-          - texlive-latex-base
-          - texlive-latex-extra
-          - texlive-luatex
-          - time
-          - tmux
-          - transmission-cli
-          - udftools
-          - ufw
-          - uidmap
-          - vcdimager
-          - vagrant
-          - vim-nox
-          - vinagre
-          - virtualbox-qt
-          - vlc
-          - whois
-          - xdg-user-dirs
-      go:
-          - github.com/giantswarm/semver-bump
-          - github.com/nishanths/license
-          - github.com/tmrts/boilr
-          - github.com/scaleway/scaleway-cli/scw
-      gem:
-          - bundler
-          - capistrano
-          - pry
-          - rake
-          - travis
-      npm:
-          - yo
-          - generator-generator
-          - grunt-cli
-          - gulp
-          - webcoach
-          - sitespeed.io
-      pip2:
-          - ansible
-          - ansible-container
-          - ansible-lint
-          - bcrypt
-          - boto
-          - boto3
-          - docker-py
-          - gordon
-          - molecule
-          - netaddr
-          - passlib
-          - python-vagrant
-          - testinfra
-      pip3:
-          - awscli
-          - awslogs
-          - docker-compose
-          - Fabric3
-          - flake8
-          - httpie
-          - parse
-          - pelican
-          - pipenv
-          - piprot
-          - pre-commit
-          - proselint
-          - pur
-          - selenium
-          - sh
-          - template
-          - tox
-          - twine
-          - yapf
-      cargo:
-          - rustfmt
+    gopath: |-
+      {{ ansible_user_dir }}/Documents/Golang
+    apt:
+      - adb
+      - apache2-utils
+      - apt-listchanges
+      - apt-xapian-index
+      - aptitude
+      - bats
+      - bijiben
+      - bluez-firmware
+      - brasero
+      - cargo
+      - chromium-driver
+      - clojure
+      - cmake
+      - containerd
+      - cryptsetup
+      - deborphan
+      - deja-dup
+      - dh-make
+      - dnsmasq
+      - dnsutils
+      - dos2unix
+      - dstat
+      - dvd+rw-tools
+      - easy-rsa
+      - epiphany-browser
+      - expect
+      - file-roller
+      - firmware-intel-sound
+      - firmware-iwlwifi
+      - firmware-linux
+      - flatpak-builder
+      - ftp
+      - geary
+      - ghex
+      - git-annex
+      - git-buildpackage
+      - gnome-boxes
+      - gnome-calendar
+      - gnome-clocks
+      - gnome-core
+      - gnome-documents
+      - gnome-logs
+      - gnome-maps
+      - gnome-music
+      - gnome-photos
+      - gnome-shell-extensions-gpaste
+      - gnome-software
+      - gnome-software-plugin-flatpak
+      - gnome-todo
+      - gnome-weather
+      - gnupg2
+      - golang
+      - gpgv
+      - graphviz
+      - grub-efi-amd64
+      - gstreamer1.0-libav
+      - gstreamer1.0-vaapi
+      - hunspell
+      - hyphen-en-us
+      - ipcalc
+      - iputils-ping
+      - keepass2
+      - kpcli
+      - libnss-resolve
+      - libnss-systemd
+      - libpam-mount
+      - libreoffice-pdfimport
+      - liburi-perl
+      - linux-image-amd64
+      - liferea
+      - luarocks
+      - lynx
+      - meld
+      - mythes-en-us
+      - netcat-openbsd
+      - network-manager-gnome
+      - network-manager-pptp-gnome
+      - nodejs-legacy
+      - npm
+      - ostree
+      - pandoc
+      - plymouth-themes
+      - polari
+      - postgresql-client
+      - printer-driver-all
+      - python3-cffi
+      - python3-cryptography
+      - python3-pip
+      - python3-venv
+      - python-cffi
+      - python-cryptography
+      - python-dev
+      - python-pip
+      - python-virtualenv
+      - reprepro
+      - resolvconf
+      - ruby-ffi
+      - ruby-full
+      - screen
+      - simple-scan
+      - shellcheck
+      - strongswan-nm
+      - task-english
+      - task-hebrew
+      - task-hebrew-desktop
+      - task-hebrew-gnome-desktop
+      - task-gnome-desktop
+      - task-laptop
+      - task-print-server
+      - task-ssh-server
+      - telnet
+      - texlive-extra-utils
+      - texlive-fonts-recommended
+      - texlive-font-utils
+      - texlive-latex-base
+      - texlive-latex-extra
+      - texlive-luatex
+      - time
+      - tmux
+      - transmission-cli
+      - udftools
+      - ufw
+      - uidmap
+      - vcdimager
+      - vagrant
+      - vim-nox
+      - vinagre
+      - virtualbox-qt
+      - vlc
+      - whois
+      - xdg-user-dirs
+    go:
+      - github.com/giantswarm/semver-bump
+      - github.com/nishanths/license
+      - github.com/tmrts/boilr
+      - github.com/scaleway/scaleway-cli/scw
+    gem:
+      - bundler
+      - capistrano
+      - pry
+      - rake
+      - travis
+    npm:
+      - yo
+      - generator-generator
+      - grunt-cli
+      - gulp
+      - webcoach
+      - sitespeed.io
+    pip2:
+      - ansible
+      - ansible-container
+      - ansible-lint
+      - bcrypt
+      - boto
+      - boto3
+      - docker-py
+      - gordon
+      - molecule
+      - netaddr
+      - passlib
+      - python-vagrant
+      - testinfra
+    pip3:
+      - awscli
+      - awslogs
+      - docker-compose
+      - Fabric3
+      - flake8
+      - httpie
+      - parse
+      - pelican
+      - pipenv
+      - piprot
+      - pre-commit
+      - proselint
+      - pur
+      - selenium
+      - sh
+      - template
+      - tox
+      - twine
+      - yapf
+    cargo:
+      - rustfmt
 
   tasks:
-      - name: Assertions
-        assert:
-          that:
-              - ansible_pkg_mgr == 'apt'
+    - name: Assertions
+      assert:
+        that:
+          - ansible_pkg_mgr == 'apt'
 
-      - name: apt install
-        when: apt is iterable
-        become: yes
-        become_user: root
-        apt:
-            name: '{{ apt }}'
-            state: present
-            purge: yes
-            force: yes
-            update_cache: yes
-            cache_valid_time: 3600
+    - name: apt install
+      when: apt is iterable
+      become: true
+      become_user: root
+      apt:
+        name: '{{ apt }}'
+        state: present
+        purge: true
+        force: true
+        update_cache: true
+        cache_valid_time: 3600
 
-      - name: Create the GOPATH directory
-        file:
-            path: '{{ gopath }}'
-            state: directory
+    - name: Create the GOPATH directory
+      file:
+        path: '{{ gopath }}'
+        state: directory
 
-      - name: go get
-        when: go is iterable
-        command: 'go get -u {{ go|join(" ") }}'
-        register: go_get
-        changed_when: "'get' in go_get"
-        environment:
-            GOPATH: '{{ gopath }}'
+    - name: go get
+      when: go is iterable
+      command: 'go get -u {{ go|join(" ") }}'
+      register: go_get
+      changed_when: "'get' in go_get"
+      environment:
+        GOPATH: '{{ gopath }}'
 
-      - name: gem install
-        with_items: '{{ gem }}'
-        when: gem is iterable
-        become: yes
-        become_user: root
-        gem:
-            name: '{{ item }}'
-            state: present
-            include_dependencies: yes
+    - name: gem install
+      with_items: '{{ gem }}'
+      when: gem is iterable
+      become: true
+      become_user: root
+      gem:
+        name: '{{ item }}'
+        state: present
+        include_dependencies: true
 
-      - name: Update npm
-        become: yes
-        become_user: root
-        npm:
-            global: yes
-            name: npm
-            state: present
-            version: '>=5'
+    - name: Update npm
+      become: true
+      become_user: root
+      npm:
+        global: true
+        name: npm
+        state: present
+        version: '>=5'
 
-      - name: npm install
-        with_items: '{{ npm }}'
-        when: npm is iterable
-        become: yes
-        become_user: root
-        npm:
-            global: yes
-            name: '{{ item }}'
-            state: present
+    - name: npm install
+      with_items: '{{ npm }}'
+      when: npm is iterable
+      become: true
+      become_user: root
+      npm:
+        global: true
+        name: '{{ item }}'
+        state: present
 
-      - name: pip2 install
-        when: pip2 is iterable
-        become: yes
-        become_user: root
-        pip:
-            name: '{{ pip2 }}'
-            state: present
-            execuable: pip2
+    - name: pip2 install
+      when: pip2 is iterable
+      become: true
+      become_user: root
+      pip:
+        name: '{{ pip2 }}'
+        state: present
+        execuable: pip2
 
-      - name: pip3 install
-        when: pip3 is iterable
-        become: yes
-        become_user: root
-        pip:
-            name: '{{ pip3 }}'
-            state: present
-            executable: pip3
+    - name: pip3 install
+      when: pip3 is iterable
+      become: true
+      become_user: root
+      pip:
+        name: '{{ pip3 }}'
+        state: present
+        executable: pip3
 
-      - name: cargo install
-        when: cargo is iterable
-        become: no
-        command: '/usr/bin/cargo install {{ cargo|join(" ") }}'
-        register: cargo_install
-        failed_when: cargo_install.rc > 0 and not 'already exists in destination' in cargo_install.stderr
-        changed_when: cargo_install.rc == 0
+    - name: cargo install
+      when: cargo is iterable
+      become: false
+      command: '/usr/bin/cargo install {{ cargo|join(" ") }}'
+      register: cargo_install
+      failed_when: >-
+        cargo_install.rc > 0 and
+        not 'already exists in destination' in cargo_install.stderr
+      changed_when: cargo_install.rc == 0

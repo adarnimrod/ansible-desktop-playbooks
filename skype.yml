@@ -3,30 +3,32 @@
   become: yes
   become_user: root
   tasks:
-      - name: Assertions
-        assert:
-          that:
-              - ansible_architecture in [ 'x86_64', 'x86' ]
-              - ansible_pkg_mgr == 'apt'
+    - name: Assertions
+      assert:
+        that:
+          - ansible_architecture in [ 'x86_64', 'x86' ]
+          - ansible_pkg_mgr == 'apt'
 
-      - name: APT install Flatpak
-        apt:
-            name: flatpak
-            state: present
-            update_cache: yes
-            cache_valid_time: 3600
+    - name: APT install Flatpak
+      apt:
+        name: flatpak
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
 
-      - name: Add Flathub repo
-        become: False
-        command: |
-            flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo --user
-        changed_when: False
+    - name: Add Flathub repo
+      become: false
+      # yamllint disable-line rule:line-length
+      command: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo --user
+      changed_when: false
 
-      - name: Install
-        become: False
-        command: |
-            flatpak install --user --assumeyes flathub com.skype.Client
-        register: skype_flatpak_install
-        changed_when: |
-            'Installing' in skype_flatpak_install.stdout
-        failed_when: skype_flatpak_install.rc|int > 0 and 'already installed' not in skype_flatpak_install.stderr
+    - name: Install
+      become: false
+      # yamllint disable-line rule:line-length
+      command: flatpak install --user --assumeyes flathub com.skype.Client
+      register: skype_flatpak_install
+      changed_when: |-
+        'Installing' in skype_flatpak_install.stdout
+      failed_when: >-
+        skype_flatpak_install.rc|int > 0 and
+        'already installed' not in skype_flatpak_install.stderr

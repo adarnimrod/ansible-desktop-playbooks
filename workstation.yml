@@ -2,73 +2,80 @@
 - include: desktop.yml
 - include: pkgs.yml
 - hosts: all
-  become: yes
+  become: true
   become_user: root
   vars:
-      docker_graph_directory: '/home/{{ ansible_env.SUDO_USER }}/.bind_mounts/docker'
-  handlers:
-  - name: Systemd daemon reload
-    systemd:
-        daemon_reload: yes
+    docker_graph_directory: |-
+      /home/{{ ansible_env.SUDO_USER }}/.bind_mounts/docker
 
-  - name: Restart Docker
-    service:
+  handlers:
+    - name: Systemd daemon reload
+      systemd:
+        daemon_reload: true
+
+    - name: Restart Docker
+      service:
         name: docker
         state: restarted
 
   tasks:
-  - name: Assertions
-    assert:
-      that:
-      - ansible_pkg_mgr == 'apt'
-      - ansible_service_mgr == 'systemd'
-      - ansible_architecture == 'x86_64'
-      - ansible_version.full | version_compare('2.4', '>=')
+    - name: Assertions
+      assert:
+        that:
+          - ansible_pkg_mgr == 'apt'
+          - ansible_service_mgr == 'systemd'
+          - ansible_architecture == 'x86_64'
+          - ansible_version.full | version_compare('2.4', '>=')
 
-  - name: APT install
-    with_items:
-    - network-manager
-    - docker-ce
-    - ufw
-    - libdvdcss2
-    - vagrant
-    - dnsmasq
-    - resolvconf
-    - libnotify-bin
-    apt:
-      name: '{{ item }}'
-      state: present
-      update_cache: yes
-      cache_valid_time: 3600
+    - name: APT install
+      with_items:
+        - network-manager
+        - docker-ce
+        - ufw
+        - libdvdcss2
+        - vagrant
+        - dnsmasq
+        - resolvconf
+        - libnotify-bin
+      apt:
+        name: '{{ item }}'
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
 
-  - name: Set NetworkManager to ignore some interfaces
-    ini_file:
-      dest: /etc/NetworkManager/NetworkManager.conf
-      section: keyfile
-      option: unmanaged-devices
-      value: interface-name:docker*;interface-name:vboxnet*;interface-name:nspawnbr*;interface-name:lxcbr0;interface-name:veth*
-      state: present
+    - name: Set NetworkManager to ignore some interfaces
+      ini_file:
+        dest: /etc/NetworkManager/NetworkManager.conf
+        section: keyfile
+        option: unmanaged-devices
+        value: >-
+          interface-name:docker*;
+          interface-name:vboxnet*;
+          interface-name:nspawnbr*;
+          interface-name:lxcbr0;
+          interface-name:veth*;
+        state: present
 
-  - name: Allow local bridges access through the firewall
-    with_items:
+    - name: Allow local bridges access through the firewall
+      with_items:
         - docker0
         - vboxnet0
         - nspawnbr0
         - lxcbr0
-    ufw:
+      ufw:
         direction: in
         interface: '{{ item }}'
         rule: allow
 
-  - name: Add user to the docker group
-    user:
+    - name: Add user to the docker group
+      user:
         name: '{{ ansible_env.SUDO_USER }}'
         groups: docker
-        append: True
+        append: true
         state: present
 
-  - name: Create Docker graph directory
-    with_items:
+    - name: Create Docker graph directory
+      with_items:
         - path: '{{ docker_graph_directory|basename }}'
           owner: '{{ ansible_env.SUDO_USER }}'
           group: '{{ ansible_env.SUDO_USER }}'
@@ -77,96 +84,98 @@
           owner: root
           group: root
           mode: 0o0711
-    file:
+      file:
         path: '{{ item.path }}'
         owner: '{{ item.owner }}'
         group: '{{ item.group }}'
         mode: '{{ item.mode }}'
         state: directory
-    notify:
-    - Restart Docker
+      notify:
+        - Restart Docker
 
-  - name: Configure Docker graph directory
-    copy:
+    - name: Configure Docker graph directory
+      copy:
         content: "{{ {'data-root': docker_graph_directory}|to_nice_json }}"
         dest: /etc/docker/daemon.json
         owner: root
         group: root
         mode: 0o0644
-    notify:
-    - Restart Docker
+      notify:
+        - Restart Docker
 
-  - name: Get Docker graph directory mountpoint
-    command: df {{ docker_graph_directory }}
-    register: docker_graph_df
-    changed_when: False
+    - name: Get Docker graph directory mountpoint
+      command: df {{ docker_graph_directory }}
+      register: docker_graph_df
+      changed_when: false
 
-  - name: Create Systemd configuration override directories
-    with_items:
-    - docker.service
-    - dnsmasq.service
-    file:
-      path: '/etc/systemd/system/{{ item }}.d/'
-      owner: root
-      group: root
-      mode: 0o0755
-      state: directory
+    - name: Create Systemd configuration override directories
+      with_items:
+        - docker.service
+        - dnsmasq.service
+      file:
+        path: '/etc/systemd/system/{{ item }}.d/'
+        owner: root
+        group: root
+        mode: 0o0755
+        state: directory
 
-  - name: Override docker.service Systemd configuration
-    template:
-      src: docker.service.d_Assertions.conf.j2
-      dest: /etc/systemd/system/docker.service.d/Assertions.conf
-      owner: root
-      group: root
-      mode: 0o0644
-    notify:
-    - Systemd daemon reload
+    - name: Override docker.service Systemd configuration
+      template:
+        src: docker.service.d_Assertions.conf.j2
+        dest: /etc/systemd/system/docker.service.d/Assertions.conf
+        owner: root
+        group: root
+        mode: 0o0644
+      notify:
+        - Systemd daemon reload
 
-  - name: Override dnsmasq.service Systemd configuration
-    template:
-      src: dnsmasq.service.d_before-systemd-resovled.conf
-      dest: /etc/systemd/system/dnsmasq.service.d/before-systemd-resovled.conf
-      owner: root
-      group: root
-      mode: 0o0644
-    notify:
-    - Systemd daemon reload
+    - name: Override dnsmasq.service Systemd configuration
+      template:
+        src: dnsmasq.service.d_before-systemd-resovled.conf
+        dest: /etc/systemd/system/dnsmasq.service.d/before-systemd-resovled.conf
+        owner: root
+        group: root
+        mode: 0o0644
+      notify:
+        - Systemd daemon reload
 
-  - name: Install Vagrant plugins
-    become: False
-    with_items:
-    - landrush
-    - vagrant-vbguest
-    - vagrant-gatling-rsync
-    command: 'vagrant plugin install {{ item }}'
-    changed_when: False
+    - name: Install Vagrant plugins
+      become: false
+      with_items:
+        - landrush
+        - vagrant-vbguest
+        - vagrant-gatling-rsync
+      command: 'vagrant plugin install {{ item }}'
+      changed_when: false
 
-  - name: Get Leiningen
-    get_url:
+    - name: Get Leiningen
+      get_url:
+        # yamllint disable-line rule:line-length
         url: https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
         dest: /usr/local/bin/lein
         owner: root
         group: root
         mode: 0o0755
 
-  - name: Install Leiningen
-    become: False
-    command: lein
-    register: install_leiningen
-    changed_when: "'Downloading Leiningen' in install_leiningen.stdout"
+    - name: Install Leiningen
+      become: false
+      command: lein
+      register: install_leiningen
+      changed_when: "'Downloading Leiningen' in install_leiningen.stdout"
 
-  - name: Download Packer zip
-    get_url:
+    - name: Download Packer zip
+      get_url:
+        # yamllint disable-line rule:line-length
         url: https://releases.hashicorp.com/packer/1.0.2/packer_1.0.2_linux_amd64.zip
         dest: /root/packer.zip
         owner: root
         group: root
         mode: 0o0644
 
-  - name: Unarchive Packer zip
-    unarchive:
+    - name: Unarchive Packer zip
+      unarchive:
         src: /root/packer.zip
         dest: /usr/local/bin/
-        remote_src: True
+        remote_src: true
         owner: root
         group: root

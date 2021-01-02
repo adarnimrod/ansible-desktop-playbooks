@@ -1,34 +1,34 @@
 ---
 - hosts: all
-  become: no
+  become: false
   tasks:
-      - name: Assertions
-        assert:
-          that:
-              - ansible_architecture == 'x86_64'
+    - name: Assertions
+      assert:
+        that:
+          - ansible_architecture == 'x86_64'
 
-      - name: Download Dropbox tarball
-        get_url:
-            url: https://www.dropbox.com/download?plat=lnx.x86_64
-            dest: '{{ ansible_user_dir }}/Downloads/dropbox-lnx.x86_64.tar.gz'
-            mode: 0o0644
-        register: download_dropbox_tarball
+    - name: Download Dropbox tarball
+      get_url:
+        url: https://www.dropbox.com/download?plat=lnx.x86_64
+        dest: '{{ ansible_user_dir }}/Downloads/dropbox-lnx.x86_64.tar.gz'
+        mode: 0o0644
+      register: download_dropbox_tarball
 
-      - name: Unpack Dropbox tarball
-        unarchive:
-            copy: no
-            dest: '{{ ansible_user_dir }}/'
-            src: '{{ ansible_user_dir }}/Downloads/dropbox-lnx.x86_64.tar.gz'
-            creates: '{{ ansible_user_dir }}/.dropbox-dist/dropboxd'
+    - name: Unpack Dropbox tarball
+      unarchive:
+        copy: false
+        dest: '{{ ansible_user_dir }}/'
+        src: '{{ ansible_user_dir }}/Downloads/dropbox-lnx.x86_64.tar.gz'
+        creates: '{{ ansible_user_dir }}/.dropbox-dist/dropboxd'
 
-      - name: Get Python Dropbox startup script
-        get_url:
-            url: https://www.dropbox.com/download?dl=packages/dropbox.py
-            dest: '{{ ansible_user_dir }}/Downloads/dropbox.py'
-            mode: 0o0755
+    - name: Get Python Dropbox startup script
+      get_url:
+        url: https://www.dropbox.com/download?dl=packages/dropbox.py
+        dest: '{{ ansible_user_dir }}/Downloads/dropbox.py'
+        mode: 0o0755
 
-      - name: Add autostart launcher
-        template:
-            src: dropbox.py.desktop.j2
-            dest: '{{ ansible_user_dir }}/.config/autostart/dropbox.py.desktop'
-            mode: 0o0644
+    - name: Add autostart launcher
+      template:
+        src: dropbox.py.desktop.j2
+        dest: '{{ ansible_user_dir }}/.config/autostart/dropbox.py.desktop'
+        mode: 0o0644
