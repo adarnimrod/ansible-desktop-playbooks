@@ -1,6 +1,6 @@
 # ansible-desktop-playbooks
 
-[![image](https://travis-ci.org/adarnimrod/ansible-desktop-playbooks.svg?branch=master)](https://travis-ci.org/adarnimrod/ansible-desktop-playbooks)
+[![pipeline status](https://git.shore.co.il/ansible/ansible-desktop-playbooks/badges/master/pipeline.svg)](https://git.shore.co.il/ansible/ansible-desktop-playbooks/-/commits/master)
 
 Ansible playbooks for setting up new desktops.
 
